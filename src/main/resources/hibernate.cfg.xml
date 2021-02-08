@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/register</property>
+        <property name="connection.username">test_user</property>
+        <property name="connection.password">1234</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL81Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="current_session_context_class">thread</property>
+        <mapping class="com.project.register.model.Individual"/>
+
+    </session-factory>
+
+</hibernate-configuration>
