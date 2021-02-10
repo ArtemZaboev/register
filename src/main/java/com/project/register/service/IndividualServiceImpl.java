@@ -22,23 +22,41 @@ public class IndividualServiceImpl implements IndividualService{
     }
 
     @Override
-    public Individual addIndividual() {
-        return null;
+    public void addIndividual(Individual individual) {
+        Session session=sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        session.save(individual);
+        session.getTransaction().commit();
     }
 
     @Override
-    public void removeIndividual() {
-
+    public void deleteIndividual(Individual individual) {
+        Session session=sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        session.delete(individual);
+        session.getTransaction().commit();
     }
 
     @Override
-    public Individual updateIndividual() {
-        return null;
+    public void updateIndividual(Individual individual) {
+        Session session=sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        session.update(individual);
+        session.getTransaction().commit();
     }
 
     @Override
-    public Individual getIndividual() {
-        return null;
+    public Individual getIndividualById(long id) {
+        Session session=sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Individual individual= session
+                .createQuery("from Individual ind where ind.id="+id,Individual.class)
+                .getSingleResult();
+        session.getTransaction().commit();
+        if (individual==null){
+            throw new NullPointerException("Individual with id="+id+" was not find.");
+        }
+        return individual;
     }
 
     @Override

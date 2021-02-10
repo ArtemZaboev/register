@@ -12,9 +12,15 @@
 <h1>Физические лица</h1>
 
 <br/><br/>
+<div class="btn-group">
+    <button>Добавить</button>
+    <button>Изменить</button>
+    <button>Удалить</button>
+    <button>Запросить ИНН</button>
+</div>
 <div>
-    <table border="1">
-        <tr>
+    <table  id="myTable">
+        <tr class="header">
             <th>Имя</th>
             <th>Фамилия</th>
             <th>Отчество</th>
@@ -32,6 +38,7 @@
             </tr>
         </c:forEach>
     </table>
+
 </div>
 </body>
 

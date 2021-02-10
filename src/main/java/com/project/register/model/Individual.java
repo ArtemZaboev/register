@@ -1,5 +1,6 @@
 package com.project.register.model;
 
+import com.sun.xml.internal.ws.developer.UsesJAXBContext;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +16,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 public class Individual implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -22,8 +25,56 @@ public class Individual implements Serializable {
     private String patronymic;
     private String dateOfBirth;
     private String inn;
+    @XmlElement
+    public long getId() {
+        return id;
+    }
+    @XmlElement
+    public void setId(long id) {
+        this.id = id;
+    }
+    @XmlElement
+    public String getName() {
+        return name;
+    }
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
+    @XmlElement
+    public String getSurname() {
+        return surname;
+    }
+    @XmlElement
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+    @XmlElement
+    public String getPatronymic() {
+        return patronymic;
+    }
+    @XmlElement
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+    @XmlElement
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+    @XmlElement
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+    @XmlElement
+    public String getInn() {
+        return inn;
+    }
+    @XmlElement
+    public void setInn(String inn) {
+        this.inn = inn;
+    }
 
-    public Individual(String name,String surname,String patronymic,String dateOfBirth) {
+    public Individual(String name, String surname, String patronymic, String dateOfBirth) {
         this.name=name;
         this.surname=surname;
         this.patronymic=patronymic;
@@ -34,6 +85,7 @@ public class Individual implements Serializable {
         this.surname=surname;
         this.dateOfBirth=dataOfBirth;
     }
+
 
     @Override
     public boolean equals(Object o) {
