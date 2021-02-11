@@ -1,48 +1,30 @@
 package com.project.register.controller;
 
-import com.project.register.model.Individual;
-import com.project.register.service.InnServiceImpl;
+import com.project.register.config.SoapClientConfig;
+import com.project.register.service.InnServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import ru.gosuslugi.smev.rev111111.GetResponseType;
 
-import java.util.List;
 
 @RestController
 public class InnController {
-    private InnServiceImpl innService;
     RestTemplate restTemplate;
 
     @Autowired
-    public InnController(InnServiceImpl innService) {
-        this.innService = innService;
+    public InnController() {
         this.restTemplate=new RestTemplate();
     }
 
-    @RequestMapping(value = "/rest/IndividualXML", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-    public @ResponseBody Individual getAllDBLogsXML() {
-        Individual individual = null;
-        try {
-            individual = innService.queryAllDBLogsXML();  //JPA (Hibernate)
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(individual);
-        return individual;
+    @GetMapping(value = "/api/xml")
+    public void getINN(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SoapClientConfig.class);
+        InnServiceClient client = context.getBean(InnServiceClient.class);
+        GetResponseType response = client.queryINNFLFIODR();
+        System.out.println("response: inn"+ response.getMessageData());
     }
-    @RequestMapping(value = "/api/test",method = RequestMethod.GET,produces = MediaType.APPLICATION_XML_VALUE)
-    public @ResponseBody ResponseEntity<String> getInn(){
-        HttpEntity httpEntity=new HttpEntity(innService.queryAllDBLogsXML());
-        System.out.println("ffFFFFFFFFF");
-        return restTemplate.exchange("", HttpMethod.GET,httpEntity,String.class);
-    }
+
 
 }

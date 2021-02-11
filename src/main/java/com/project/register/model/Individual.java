@@ -1,6 +1,5 @@
 package com.project.register.model;
 
-import com.sun.xml.internal.ws.developer.UsesJAXBContext;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

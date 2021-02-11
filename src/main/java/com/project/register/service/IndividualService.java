@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IndividualService {
     void addIndividual(Individual individual);
-    void deleteIndividual(Individual individual);
+    void deleteIndividual(long id);
     void updateIndividual( Individual individual);
     Individual getIndividualById(long id);
     List<Individual> getAllIndividuals();

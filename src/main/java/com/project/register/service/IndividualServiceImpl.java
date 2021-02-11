@@ -4,12 +4,9 @@ import com.project.register.model.Individual;
 import com.project.register.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class IndividualServiceImpl implements IndividualService{
@@ -30,10 +27,10 @@ public class IndividualServiceImpl implements IndividualService{
     }
 
     @Override
-    public void deleteIndividual(Individual individual) {
+    public void deleteIndividual(long id) {
         Session session=sessionFactory.getCurrentSession();
         session.beginTransaction();
-        session.delete(individual);
+        session.delete(getIndividualById(id));
         session.getTransaction().commit();
     }
 
@@ -48,11 +45,15 @@ public class IndividualServiceImpl implements IndividualService{
     @Override
     public Individual getIndividualById(long id) {
         Session session=sessionFactory.getCurrentSession();
-        session.beginTransaction();
+        boolean transactionIsActive=session.getTransaction().isActive();
+
+        if (!transactionIsActive)
+            session.beginTransaction();
         Individual individual= session
                 .createQuery("from Individual ind where ind.id="+id,Individual.class)
                 .getSingleResult();
-        session.getTransaction().commit();
+        if (!transactionIsActive)
+            session.getTransaction().commit();
         if (individual==null){
             throw new NullPointerException("Individual with id="+id+" was not find.");
         }
